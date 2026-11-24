@@ -1,0 +1,1153 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coffee Mood — Feel The Taste</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #100e0c;
+  --panel: #1d1915;
+  --gold: #d7a879;
+  --white: #f7f0e7;
+  --muted: #a69a8e;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+/* BACKGROUND */
+
+body::before {
+  content: "";
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: #a66b3520;
+  filter: blur(120px);
+  top: 10%;
+  right: -300px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* HEADER */
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 22px 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #100e0ce8;
+  backdrop-filter: blur(20px);
+  z-index: 100;
+  border-bottom: 1px solid #ffffff0b;
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 27px;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+nav {
+  display: flex;
+  gap: 32px;
+}
+
+nav a {
+  font-size: 13px;
+  color: #c7bdb2;
+  transition: .3s;
+}
+
+nav a:hover { color: var(--gold); }
+
+.cart-button {
+  background: var(--gold);
+  border: none;
+  padding: 13px 22px;
+  border-radius: 30px;
+  color: #21150d;
+  font-weight: 800;
+}
+
+/* HERO */
+
+.hero {
+  min-height: 850px;
+  padding: 160px 9% 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  perspective: 1200px;
+}
+
+.hero-text {
+  position: relative;
+  z-index: 3;
+  animation: slideUp 1s ease;
+}
+
+.eyebrow {
+  color: var(--gold);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(55px, 7vw, 95px);
+  line-height: 1.06;
+  margin: 28px 0;
+  font-weight: 500;
+}
+
+.hero h1 span { color: var(--gold); }
+
+.hero p {
+  color: var(--muted);
+  line-height: 1.9;
+  max-width: 430px;
+  font-size: 15px;
+  margin-bottom: 35px;
+}
+
+.main-btn {
+  display: inline-block;
+  padding: 17px 30px;
+  background: linear-gradient(135deg,#e4bb91,#b77c4c);
+  color: #1a120c;
+  font-weight: 800;
+  border-radius: 5px;
+  transition: .3s;
+  box-shadow: 0 10px 35px #b77c4c35;
+}
+
+.main-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px #b77c4c55;
+}
+
+/* 3D HERO IMAGE */
+
+.hero-visual {
+  perspective: 1000px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: float 5s ease-in-out infinite;
+}
+
+.cup-card {
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 4/5;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateY(-12deg) rotateX(5deg);
+  transition: transform .25s ease;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 35px 35px 80px #0009;
+  border: 1px solid #ffffff20;
+}
+
+.cup-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cup-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg,#100e0c88,transparent 60%);
+}
+
+.floating-label {
+  position: absolute;
+  bottom: 35px;
+  left: -35px;
+  z-index: 5;
+  background: #272019ee;
+  backdrop-filter: blur(15px);
+  padding: 20px 25px;
+  border: 1px solid #d7a87955;
+  border-radius: 12px;
+  box-shadow: 0 20px 50px #0008;
+  transform: translateZ(65px);
+}
+
+.floating-label strong {
+  display: block;
+  color: var(--gold);
+  font-size: 20px;
+}
+
+.floating-label span {
+  color: #c1b5a8;
+  font-size: 12px;
+}
+
+.bean {
+  position: absolute;
+  font-size: 55px;
+  color: #c08a57;
+  opacity: .5;
+  animation: beanFloat 7s ease-in-out infinite;
+}
+
+.bean.one { top: 10%; right: 12%; }
+.bean.two { bottom: 15%; right: 5%; animation-delay: 2s; }
+.bean.three { top: 45%; left: 48%; font-size: 30px; animation-delay: 1s; }
+
+@keyframes float {
+  0%,100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-17px) rotate(1deg); }
+}
+
+@keyframes beanFloat {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-25px) rotate(35deg); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* GENERAL */
+
+section { padding: 110px 9%; }
+
+.heading {
+  text-align: center;
+  margin-bottom: 55px;
+}
+
+.heading small {
+  color: var(--gold);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.heading h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(38px,5vw,58px);
+  font-weight: 500;
+  margin-top: 15px;
+}
+
+.heading h2 span { color: var(--gold); }
+
+/* MENU FILTER */
+
+.filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 45px;
+}
+
+.filter {
+  padding: 12px 24px;
+  border: 1px solid #594431;
+  background: transparent;
+  color: #c8b9a9;
+  border-radius: 30px;
+  transition: .3s;
+}
+
+.filter.active,
+.filter:hover {
+  background: var(--gold);
+  color: #18110c;
+}
+
+/* 3D PRODUCT CARDS */
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 30px;
+  perspective: 1200px;
+}
+
+.product {
+  background: linear-gradient(145deg,#27211b,#181411);
+  border: 1px solid #ffffff10;
+  border-radius: 15px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform .2s ease, border .3s, box-shadow .3s;
+  box-shadow: 0 15px 35px #0005;
+}
+
+.product:hover {
+  border-color: #d7a87980;
+  box-shadow: 0 25px 55px #0009;
+}
+
+.product.hidden { display: none; }
+
+.product-image {
+  height: 250px;
+  overflow: hidden;
+  transform: translateZ(12px);
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s;
+}
+
+.product:hover .product-image img {
+  transform: scale(1.1);
+}
+
+.product-info {
+  padding: 25px;
+  transform: translateZ(20px);
+}
+
+.product-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+.product-info p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+  min-height: 45px;
+}
+
+.product-bottom {
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.price {
+  color: var(--gold);
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.add {
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 11px 16px;
+  border-radius: 5px;
+  transition: .3s;
+}
+
+.add:hover {
+  background: var(--gold);
+  color: #17110c;
+}
+
+/* SPECIAL OFFER */
+
+.offer {
+  margin: 20px 9%;
+  padding: 70px;
+  border-radius: 20px;
+  background:
+    linear-gradient(90deg,#17110eea,#17110e55),
+    url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1400') center/cover;
+  border: 1px solid #d7a87940;
+  box-shadow: 0 30px 80px #0008;
+}
+
+.offer small { color: var(--gold); letter-spacing: 4px; }
+
+.offer h2 {
+  font-family: 'Playfair Display',serif;
+  font-size: 48px;
+  max-width: 550px;
+  margin: 20px 0;
+}
+
+.offer p {
+  color: #d0c3b5;
+  margin-bottom: 25px;
+}
+
+/* ABOUT */
+
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 70px;
+  background: #1c1713;
+}
+
+.about-image {
+  perspective: 1000px;
+}
+
+.about-image img {
+  width: 100%;
+  height: 470px;
+  object-fit: cover;
+  border-radius: 15px;
+  transform: rotateY(7deg);
+  box-shadow: 25px 25px 60px #0008;
+  transition: .5s;
+}
+
+.about-image img:hover { transform: rotateY(0) scale(1.02); }
+
+.about-text small { color: var(--gold); letter-spacing: 4px; }
+
+.about-text h2 {
+  font-family: 'Playfair Display',serif;
+  font-size: 48px;
+  font-weight: 500;
+  margin: 20px 0;
+}
+
+.about-text p {
+  color: var(--muted);
+  line-height: 2;
+  margin-bottom: 18px;
+}
+
+/* FEATURES */
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 25px;
+}
+
+.feature {
+  padding: 40px 25px;
+  text-align: center;
+  background: linear-gradient(145deg,#262019,#171310);
+  border: 1px solid #ffffff10;
+  border-radius: 15px;
+  transition: .4s;
+}
+
+.feature:hover {
+  transform: translateY(-10px) rotateX(4deg);
+  border-color: #d7a87966;
+}
+
+.feature .icon { font-size: 40px; margin-bottom: 20px; }
+.feature h3 { color: var(--gold); margin-bottom: 12px; }
+.feature p { color: var(--muted); line-height: 1.8; font-size: 13px; }
+
+/* GALLERY */
+
+.gallery {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 15px;
+}
+
+.gallery img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: .4s;
+}
+
+.gallery img:hover {
+  transform: scale(1.03);
+  filter: brightness(1.15);
+}
+
+/* REVIEWS */
+
+.reviews {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 25px;
+}
+
+.review {
+  padding: 30px;
+  background: var(--panel);
+  border-radius: 12px;
+  border: 1px solid #ffffff0d;
+}
+
+.stars { color: var(--gold); letter-spacing: 3px; }
+
+.review p {
+  color: #c3b6a9;
+  line-height: 1.8;
+  margin: 20px 0;
+}
+
+.review strong { color: var(--gold); }
+
+/* CONTACTS */
+
+.contacts {
+  background: #211a15;
+  text-align: center;
+}
+
+.contacts p {
+  color: var(--muted);
+  margin: 15px;
+}
+
+/* FOOTER */
+
+footer {
+  padding: 35px 9%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  color: #81766c;
+  font-size: 13px;
+}
+
+footer span { color: var(--gold); }
+
+/* CART */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: #000a;
+  z-index: 150;
+  opacity: 0;
+  pointer-events: none;
+  transition: .3s;
+}
+
+.overlay.show { opacity: 1; pointer-events: auto; }
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: -450px;
+  height: 100vh;
+  width: min(420px,100%);
+  background: #201a15;
+  z-index: 200;
+  padding: 30px;
+  transition: .4s;
+  overflow-y: auto;
+  box-shadow: -20px 0 60px #0008;
+}
+
+.drawer.open { right: 0; }
+
+.drawer-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 30px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 17px 0;
+  border-bottom: 1px solid #ffffff18;
+}
+
+.cart-item small { color: var(--muted); }
+
+.cart-item button {
+  background: none;
+  border: none;
+  color: var(--gold);
+}
+
+.total {
+  margin-top: 30px;
+  font-size: 22px;
+  color: var(--gold);
+}
+
+.checkout {
+  margin-top: 25px;
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 5px;
+  background: var(--gold);
+  font-weight: 800;
+}
+
+.checkout:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+/* REVEAL */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: .8s;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* MOBILE */
+
+@media(max-width:900px) {
+  .hero { grid-template-columns: 1fr 1fr; }
+  .products { grid-template-columns: repeat(2,1fr); }
+  .about { grid-template-columns: 1fr; }
+  .reviews { grid-template-columns: 1fr 1fr; }
+}
+
+@media(max-width:600px) {
+  header { padding: 17px 5%; }
+  .logo { font-size: 19px; }
+  nav { gap: 12px; }
+  nav a { font-size: 10px; }
+  .cart-button { padding: 10px 12px; font-size: 11px; }
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 140px 7% 80px;
+    gap: 55px;
+  }
+  .hero h1 { font-size: 60px; }
+  .cup-card { max-width: 330px; }
+  .floating-label { left: -5px; }
+  section { padding: 75px 6%; }
+  .products { grid-template-columns: 1fr; }
+  .offer { margin: 10px 5%; padding: 35px 25px; }
+  .offer h2 { font-size: 35px; }
+  .features,.reviews { grid-template-columns: 1fr; }
+  .gallery { grid-template-columns: 1fr 1fr; }
+  .gallery img { height: 170px; }
+  .about-text h2 { font-size: 38px; }
+  .about-image img { height: 320px; }
+  footer { justify-content: center; text-align: center; }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a href="#" class="logo">COFFEE MOOD.</a>
+
+  <nav>
+    <a href="#menu">Меню</a>
+    <a href="#about">О нас</a>
+    <a href="#gallery">Галерея</a>
+    <a href="#contacts">Контакты</a>
+  </nav>
+
+  <button class="cart-button" onclick="toggleCart()">
+    🛒 <span id="count">0</span>
+  </button>
+</header>
+
+<main>
+
+<!-- HERO -->
+
+<section class="hero">
+  <div class="hero-text">
+    <div class="eyebrow">Coffee · Bakery · Lifestyle</div>
+
+    <h1>Feel the<br><span>coffee mood.</span></h1>
+
+    <p>
+      Не просто кофе. Это настроение, атмосфера
+      и маленькое удовольствие, которое делает
+      каждый день особенным.
+    </p>
+
+    <a href="#menu" class="main-btn">Открыть меню →</a>
+  </div>
+
+  <div class="hero-visual" id="heroVisual">
+    <div class="bean one">☕</div>
+    <div class="bean two">✦</div>
+    <div class="bean three">✧</div>
+
+    <div class="cup-card" id="cupCard">
+      <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000" alt="Чашка кофе">
+    </div>
+
+    <div class="floating-label">
+      <strong>100% Love</strong>
+      <span>Made with passion</span>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+
+<section id="menu">
+  <div class="heading">
+    <small>Our collection</small>
+    <h2>Выбери свой <span>вкус</span></h2>
+  </div>
+
+  <div class="filters">
+    <button class="filter active" onclick="filter('all',this)">Всё</button>
+    <button class="filter" onclick="filter('coffee',this)">Кофе</button>
+    <button class="filter" onclick="filter('dessert',this)">Десерты</button>
+    <button class="filter" onclick="filter('other',this)">Напитки</button>
+  </div>
+
+  <div class="products">
+
+    <article class="product reveal" data-category="coffee">
+      <div class="product-image">
+        <img src="https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=700" alt="Капучино" loading="lazy">
+      </div>
+      <div class="product-info">
+        <h3>Капучино</h3>
+        <p>Нежная молочная пенка и насыщенный эспрессо.</p>
+        <div class="product-bottom">
+          <span class="price">220 ₽</span>
+          <button class="add" onclick="add('Капучино',220)">+ Купить</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product reveal" data-category="coffee">
+      <div class="product-image">
+        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=700" alt="Латте" loading="lazy">
+      </div>
+      <div class="product-info">
+        <h3>Латте</h3>
+        <p>Мягкий кофейный вкус с натуральным молоком.</p>
+        <div class="product-bottom">
+          <span class="price">250 ₽</span>
+          <button class="add" onclick="add('Латте',250)">+ Купить</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product reveal" data-category="coffee">
+      <div class="product-image">
+        <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=700" alt="Американо" loading="lazy">
+      </div>
+      <div class="product-info">
+        <h3>Американо</h3>
+        <p>Классический крепкий кофе для бодрого дня.</p>
+        <div class="product-bottom">
+          <span class="price">180 ₽</span>
+          <button class="add" onclick="add('Американо',180)">+ Купить</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product reveal" data-category="dessert">
+      <div class="product-image">
+        <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=700" alt="Круассан" loading="lazy">
+      </div>
+      <div class="product-info">
+        <h3>Круассан</h3>
+        <p>Свежая хрустящая французская выпечка.</p>
+        <div class="product-bottom">
+          <span class="price">190 ₽</span>
+          <button class="add" onclick="add('Круассан',190)">+ Купить</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product reveal" data-category="dessert">
+      <div class="product-image">
+        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700" alt="Торт" loading="lazy">
+      </div>
+      <div class="product-info">
+        <h3>Шоколадный торт</h3>
+        <p>Нежный шоколадный десерт для сладкого настроения.</p>
+        <div class="product-bottom">
+          <span class="price">320 ₽</span>
+          <button class="add" onclick="add('Шоколадный торт',320)">+ Купить</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product reveal" data-category="other">
+      <div class="product-image">
+        <img src="https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=700" alt="Матча" loading="lazy">
+      </div>
+      <div class="product-info">
+        <h3>Матча</h3>
+        <p>Японский зелёный чай с молочной пенкой.</p>
+        <div class="product-bottom">
+          <span class="price">280 ₽</span>
+          <button class="add" onclick="add('Матча',280)">+ Купить</button>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- SPECIAL -->
+
+<div class="offer reveal">
+  <small>THE SPECIAL OFFER</small>
+  <h2>Твой идеальный кофейный перерыв.</h2>
+  <p>Капучино + свежий круассан всего за 350 ₽.</p>
+  <a href="#menu" class="main-btn">Попробовать →</a>
+</div>
+
+<!-- ABOUT -->
+
+<section class="about" id="about">
+  <div class="about-image">
+    <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=1000" alt="Интерьер кофейни" loading="lazy">
+  </div>
+
+  <div class="about-text">
+    <small>Our philosophy</small>
+    <h2>Кофе — это маленькое искусство.</h2>
+    <p>
+      Coffee Mood — пространство, где каждый напиток
+      создаётся с любовью. Мы ценим вкус, качество
+      и атмосферу.
+    </p>
+    <p>
+      Здесь можно встретиться с друзьями, поработать
+      или просто насладиться своим моментом.
+    </p>
+    <a href="#contacts" class="main-btn">Найти нас →</a>
+  </div>
+</section>
+
+<!-- FEATURES -->
+
+<section>
+  <div class="heading">
+    <small>Why coffee mood?</small>
+    <h2>Почему выбирают <span>нас</span></h2>
+  </div>
+
+  <div class="features">
+    <div class="feature reveal">
+      <div class="icon">☕</div>
+      <h3>Отборный кофе</h3>
+      <p>Качественные кофейные зёрна и профессиональное приготовление.</p>
+    </div>
+
+    <div class="feature reveal">
+      <div class="icon">🥐</div>
+      <h3>Свежие десерты</h3>
+      <p>Вкусная выпечка и десерты для каждого настроения.</p>
+    </div>
+
+    <div class="feature reveal">
+      <div class="icon">♡</div>
+      <h3>Уютная атмосфера</h3>
+      <p>Приятная музыка, стильный интерьер и заботливый сервис.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+
+<section id="gallery">
+  <div class="heading">
+    <small>Our atmosphere</small>
+    <h2>Немного <span>атмосферы</span></h2>
+  </div>
+
+  <div class="gallery">
+    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800" alt="Кофе" loading="lazy">
+    <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=800" alt="Кофейня" loading="lazy">
+    <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800" alt="Интерьер" loading="lazy">
+  </div>
+</section>
+
+<!-- REVIEWS -->
+
+<section>
+  <div class="heading">
+    <small>Happy customers</small>
+    <h2>Отзывы наших <span>гостей</span></h2>
+  </div>
+
+  <div class="reviews">
+    <div class="review reveal">
+      <div class="stars">★★★★★</div>
+      <p>«Очень уютное место! Вкусный кофе и приятная атмосфера. Обязательно вернусь!»</p>
+      <strong>Анастасия</strong>
+    </div>
+
+    <div class="review reveal">
+      <div class="stars">★★★★★</div>
+      <p>«Отличный капучино, красивые десерты и стильный интерьер. Всё супер!»</p>
+      <strong>Александр</strong>
+    </div>
+
+    <div class="review reveal">
+      <div class="stars">★★★★★</div>
+      <p>«Идеальное место, чтобы провести утро с чашкой любимого кофе.»</p>
+      <strong>Мария</strong>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+
+<section class="contacts" id="contacts">
+  <div class="heading">
+    <small>Come and visit</small>
+    <h2>Увидимся в <span>Coffee Mood</span></h2>
+  </div>
+
+  <p>📍 Адрес: укажите адрес кофейни</p>
+  <p>🕒 Каждый день: 08:00 — 22:00</p>
+  <p>📞 +7 (000) 000-00-00</p>
+
+  <a href="tel:+70000000000" class="main-btn">Позвонить нам</a>
+</section>
+
+</main>
+
+<footer>
+  <div class="logo">COFFEE MOOD.</div>
+  <p>© 2026 Coffee Mood. Crafted with <span>♥</span></p>
+</footer>
+
+<!-- CART -->
+
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h2>Твоя корзина 🛒</h2>
+    <button class="close" onclick="toggleCart()">×</button>
+  </div>
+
+  <div id="cartItems">
+    <p style="color:#a69a8e">Корзина пока пустая.</p>
+  </div>
+
+  <div class="total">
+    Итого: <span id="total">0</span> ₽
+  </div>
+
+  <button class="checkout" id="checkout" onclick="checkout()" disabled>
+    Оформить заказ
+  </button>
+</aside>
+
+<script>
+
+// SHOPPING CART
+
+let cart = [];
+
+function add(name,price) {
+  let item = cart.find(x => x.name === name);
+
+  if(item) {
+    item.qty++;
+  } else {
+    cart.push({name,price,qty:1});
+  }
+
+  updateCart();
+}
+
+function updateCart() {
+  let html = "";
+  let total = 0;
+  let count = 0;
+
+  cart.forEach((item,index) => {
+    total += item.price * item.qty;
+    count += item.qty;
+
+    html += `
+      <div class="cart-item">
+        <div>
+          <strong>${item.name}</strong><br>
+          <small>${item.price} ₽ × ${item.qty}</small>
+        </div>
+        <button onclick="removeItem(${index})">Удалить</button>
+      </div>
+    `;
+  });
+
+  document.getElementById("cartItems").innerHTML =
+    html || '<p style="color:#a69a8e">Корзина пока пустая.</p>';
+
+  document.getElementById("count").textContent = count;
+  document.getElementById("total").textContent = total;
+  document.getElementById("checkout").disabled = cart.length === 0;
+}
+
+function removeItem(index) {
+  cart.splice(index,1);
+  updateCart();
+}
+
+function toggleCart() {
+  document.getElementById("drawer").classList.toggle("open");
+  document.getElementById("overlay").classList.toggle("show");
+}
+
+function checkout() {
+  if(!cart.length) return;
+
+  let order = cart.map(x =>
+    `${x.name} — ${x.qty} шт.`
+  ).join("\n");
+
+  let total = cart.reduce((sum,x) =>
+    sum + x.price*x.qty,0
+  );
+
+  alert(
+    "Демонстрация заказа:\n\n" +
+    order +
+    "\n\nИтого: " + total + " ₽" +
+    "\n\nДля реального оформления нужно подключить сервер или Telegram."
+  );
+}
+
+// FILTERS
+
+function filter(category,button) {
+  document.querySelectorAll(".filter").forEach(x =>
+    x.classList.remove("active")
+  );
+
+  button.classList.add("active");
+
+  document.querySelectorAll(".product").forEach(item => {
+    item.classList.toggle(
+      "hidden",
+      category !== "all" &&
+      item.dataset.category !== category
+    );
+  });
+}
+
+// 3D MOUSE EFFECT
+
+const cup = document.getElementById("cupCard");
+const hero = document.getElementById("heroVisual");
+
+if(window.matchMedia("(hover: hover)").matches) {
+  hero.addEventListener("mousemove",e => {
+    const rect = hero.getBoundingClientRect();
+
+    const x = (e.clientX - rect.left) / rect.width - .5;
+    const y = (e.clientY - rect.top) / rect.height - .5;
+
+    cup.style.transform =
+      `rotateY(${-12 + x*20}deg) rotateX(${5-y*20}deg)`;
+  });
+
+  hero.addEventListener("mouseleave",() => {
+    cup.style.transform = "rotateY(-12deg) rotateX(5deg)";
+  });
+}
+
+// PRODUCT 3D TILT
+
+document.querySelectorAll(".product").forEach(card => {
+  if(!window.matchMedia("(hover: hover)").matches) return;
+
+  card.addEventListener("mousemove",e => {
+    const rect = card.getBoundingClientRect();
+
+    const x = (e.clientX-rect.left)/rect.width-.5;
+    const y = (e.clientY-rect.top)/rect.height-.5;
+
+    card.style.transform =
+      `rotateY(${x*10}deg) rotateX(${-y*10}deg) translateY(-5px)`;
+  });
+
+  card.addEventListener("mouseleave",() => {
+    card.style.transform = "";
+  });
+});
+
+// SCROLL ANIMATIONS
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:.12});
+
+document.querySelectorAll(".reveal").forEach(el =>
+  observer.observe(el)
+);
+
+</script>
+
+</body>
+</html>
